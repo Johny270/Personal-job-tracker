@@ -3,7 +3,7 @@ import Landing from "./pages/Landing";
 function App() {
   return (
     <div>
-      <h1>jobiFy</h1>
+      {/* <h1>jobiFy</h1> */}
       <Landing />
     </div>
   );
