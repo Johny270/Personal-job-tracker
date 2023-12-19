@@ -15,7 +15,7 @@ const AppProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const displayAlert = () => {
-    dispatch({ type: DISPLAY_ALERT})
+    dispatch({ type: DISPLAY_ALERT })
     clearAlert()
   }
   
