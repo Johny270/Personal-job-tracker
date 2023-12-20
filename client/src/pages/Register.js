@@ -4,7 +4,7 @@ import Wrapper from '../assets/wrappers/RegisterPage'
 import { useAppContext } from "../context/appContext"
 
 const initialState  = {
-  name: '',
+  username: '',
   email: '',
   password: '',
   isMember: true,
@@ -15,7 +15,7 @@ const Register = () => {
   const [values, setValues] = useState(initialState)
 
   // global state and useNavigate
-  const { isLoading, showAlert, displayAlert } = useAppContext()
+  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext()
   
   const toggleMember = () => {
     setValues({...values, isMember: !values.isMember});
@@ -27,10 +27,16 @@ const Register = () => {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    const { name, email, password, isMember } = values
-    if(!email || !password || (!isMember && !name)) {
+    const { username, email, password, isMember } = values
+    if(!email || !password || (!isMember && !username)) {
       displayAlert()
       return
+    }
+    const currentUser = { username, email, password }
+    if(isMember) {
+      console.log('already a member');
+    } else {
+      registerUser(currentUser)
     }
     console.log(values)
   }
@@ -62,7 +68,7 @@ const Register = () => {
           handleChange={handleChange}
         />
         
-        <button type="submit" className="btn btn-block">Submit</button>
+        <button type="submit" className="btn btn-block" disabled={ isLoading }>Submit</button>
         <p>
           {values.isMember ? 'Not a member yet ? ' : 'Already a member ? '}
           <button type="button" onClick={toggleMember} className="member-btn">{values.isMember ? 'Register' : 'Login'}</button>
