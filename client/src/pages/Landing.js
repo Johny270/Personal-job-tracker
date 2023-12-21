@@ -1,6 +1,7 @@
 import { Logo } from '../components'
 import main from '../assets/images/main-alternative.svg'
 import Wrapper from '../assets/wrappers/LandingPage'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   return (
@@ -14,7 +15,7 @@ const Landing = () => {
           <p>
             I'm baby brunch hoodie viral single-origin coffee, Brooklyn lomo you probably haven't heard of them shabby chic same 8-bit cronut literally. Tacos mumblecore scenester, retro health goth single-origin coffee readymade chicharrones copper mug irony neutral milk hotel gorpcore.
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <Link to='/register' className="btn btn-hero">Login/Register</Link>
         </div>
         <img src={main} alt="job hunt" className="img main-img" />
       </div>
