@@ -41,6 +41,9 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.pre('save', async function() {
+  // this.modifiedPaths() returns values/fields that were modified
+  // this.isModified('value') check if the provided value/field was modified and returns a boolean
+  if(!this.isModified('password')) return
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
