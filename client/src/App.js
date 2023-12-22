@@ -2,6 +2,7 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import {Landing, Register, Error, ProtectedRoute} from './pages'
 import { AddJob, AllJobs, Profile, SharedLayout, Stats } from './pages/dashboard'
+// Correct those imports
 
 function App() {
   return (
