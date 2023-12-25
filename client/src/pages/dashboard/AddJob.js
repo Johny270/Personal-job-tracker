@@ -14,7 +14,8 @@ const AddJob = () => {
     jobTypeOptions,
     status,
     statusOptions,
-    isEditing, 
+    isEditing,
+    handleChange,
   } = useAppContext()
 
   const handleSubmit = (evt) => {
@@ -30,7 +31,7 @@ const AddJob = () => {
   const handleJobInput = (evt) => {
     const name = evt.target.name
     const value = evt.target.value
-    console.log(`${name}: ${value}`)
+    handleChange({ name, value })
   }
 
   return (
