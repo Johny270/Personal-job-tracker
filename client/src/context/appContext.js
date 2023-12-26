@@ -16,6 +16,8 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from './actions'
 import axios from 'axios'
 
@@ -101,7 +103,7 @@ const AppProvider = ({children}) => {
     try {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
       const { user, token, location } = data
-      dispatch({ 
+      dispatch({
         type: SETUP_USER_SUCCESS,
         payload: { user, token, location, alertText }
       })
@@ -186,8 +188,30 @@ const AppProvider = ({children}) => {
     clearAlert()
   }
 
+  const getJobs = async () => {
+    let url = `/jobs`
+
+    dispatch({ type: GET_JOBS_BEGIN })
+    try {
+      const { data } = await authFetch(url)
+      const { jobs, totalJobs, numOfPages } = data
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: {
+          jobs,
+          totalJobs,
+          numOfPages,
+        },
+      })
+    } catch (error) {
+      console.log(error.response)
+      logoutUser()
+    }
+    clearAlert()
+  }
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser, updateUser, handleChange, clearValues, createJob }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser, updateUser, handleChange, clearValues, createJob, getJobs }}>{children}</AppContext.Provider>
   ) 
 }
 
