@@ -11,6 +11,9 @@ import {
   UPDATE_USER_SUCCESS,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from "./actions"
 
 import { initialState } from "./appContext"
@@ -88,30 +91,13 @@ const reducer = (state, action) => {
       [action.payload.name] : action.payload.value
     }
   }
-
-  const initialState = {
-    isEditing: false,
-    editJobId: '',
-    position: '',
-    company: '',
-    jobLocation: state.userLocation,
-    jobType: 'full-time',
-    status: 'pending'
-  }
-  if (action.type === CLEAR_VALUES) {
-    return { 
-      ...state,
-      ...initialState, 
-    }
-  }
-  
   if (action.type === TOGGLE_SIDEBAR) {
     return { 
       ...state, 
       showSidebar: !state.showSidebar
     }
   }
-  if(action.type = LOGOUT_USER) {
+  if(action.type === LOGOUT_USER) {
     return {
       ...initialState,
       user: null,
@@ -120,7 +106,49 @@ const reducer = (state, action) => {
       jobLocation: '',
     }
   }
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      editJobId: '',
+      position: '',
+      company: '',
+      jobLocation: state.userLocation,
+      jobType: 'full-time',
+      status: 'pending',
+    }
+
+    return {
+      ...state,
+      ...initialState,
+    }
+  }
+  if (action.type === CREATE_JOB_BEGIN) {
+    return { 
+      ...state,
+      isLoading: true,
+    }
+  }
+  if (action.type === CREATE_JOB_SUCCESS) {
+    return { 
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!'
+    }
+  }
+  if (action.type === CREATE_JOB_ERROR) {
+    return { 
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
   throw new Error(`no such action: ${action.type}`)
 }
+
 
 export default reducer

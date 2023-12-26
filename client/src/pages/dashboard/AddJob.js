@@ -1,10 +1,12 @@
 import { FormRow, Alert, FormRowSelect} from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
+import { CREATE_JOB_BEGIN } from '../../context/actions'
 
 const AddJob = () => {
 
   const { 
+    isLoading,
     showAlert, 
     displayAlert, 
     position, 
@@ -17,6 +19,7 @@ const AddJob = () => {
     isEditing,
     handleChange,
     clearValues,
+    createJob,
   } = useAppContext()
 
   const handleSubmit = (evt) => {
@@ -26,7 +29,10 @@ const AddJob = () => {
       displayAlert()
       return
     }
-    console.log('Created Job');
+    if(isEditing) {
+      return
+    }
+    createJob();
   }
 
   const handleJobInput = (evt) => {
@@ -79,6 +85,7 @@ const AddJob = () => {
               type='submit' 
               className='btn btn-block submit-btn' 
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               Submit
             </button>
